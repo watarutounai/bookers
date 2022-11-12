@@ -1,0 +1,37 @@
+<h1>Books</h1>
+
+<% @books.each do |book| %>
+
+  <table>
+    <tr>
+      <td>Title</td>
+      <td><span><%= book.title %></span></td>
+      <td>Body</td>
+      <td><span><%= book.body %></span></td>
+    </tr>
+  </table>
+  <%= link_to "show", book_path(book.id) %>
+  <%= link_to "edit", edit_book_path(book.id) %>
+  <%= link_to "Destroy", book_path(book.id),method: :delete, "data-confirm" => "本当に削除しますか？" %>
+<% end %>
+
+<% if @book.errors.any? %>
+  <%= @book.errors.count %> error prohibited this obj from being saved:
+  <ul>
+    <% @book.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+  </ul>
+<% end %>
+<!-- form_with部分　-->
+<%= form_with model: @book do |f| %>
+  <h2>New book</h2>
+
+  <h4>title</h4>
+  <%= f.text_field :title %>
+
+  <h4>body</h4>
+  <%= f.text_area :body %>
+
+  <%= f.submit 'Create Book' %>
+<% end %>
